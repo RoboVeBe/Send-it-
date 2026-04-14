@@ -29,7 +29,7 @@
 ### Floating Popup Mode
 <img src="screenshots/01-floating-popup-mode.png" width="650" alt="Floating Popup Mode"/>
 
-*Default floating window mode — works alongside any active browser tab*
+*Default floating window mode — works alongside any active browser tab,perfect for multiple monitors setup*
 
 ### Side Panel — Docked Mode
 <img src="screenshots/14-side-panel-docked.png" width="650" alt="Side Panel Docked"/>
