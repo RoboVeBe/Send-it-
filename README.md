@@ -7,47 +7,58 @@
 ## 📸 Screenshots
 
 ### Main Form — Light Mode
-![Main Form Light](screenshots/11-main-form-empty-light.png)
+<img src="screenshots/11-main-form-empty-light.png" width="400" alt="Main Form Light Mode"/>
+
 *Clean, structured form with smart routing fields*
 
 ### Main Form — Dark Mode (Filled)
-![Main Form Dark Filled](screenshots/08-main-form-filled-dark.png)
+<img src="screenshots/08-main-form-filled-dark.png" width="400" alt="Main Form Dark Mode Filled"/>
+
 *Dark mode with a fully filled Critical priority ticket ready to generate*
 
 ### Main Form — Dark Mode (Empty)
-![Main Form Dark Empty](screenshots/13-main-form-empty-dark.png)
+<img src="screenshots/13-main-form-empty-dark.png" width="400" alt="Main Form Dark Mode Empty"/>
+
 *Default state on open — dark mode*
 
 ### Generated Report Output
-![Report Output](screenshots/09-report-output-notepadpp.png)
+<img src="screenshots/09-report-output-notepadpp.png" width="650" alt="Generated Report Output"/>
+
 *Structured report output — copy and paste directly into Outlook, Gmail, or any email client. Format is also ServiceNow-ingestible with no additional formatting required.*
 
 ### Floating Popup Mode
-![Floating Popup](screenshots/01-floating-popup-mode.png)
+<img src="screenshots/01-floating-popup-mode.png" width="650" alt="Floating Popup Mode"/>
+
 *Default floating window mode — works alongside any active browser tab*
 
 ### Side Panel — Docked Mode
-![Side Panel Docked](screenshots/14-side-panel-docked.png)
+<img src="screenshots/14-side-panel-docked.png" width="650" alt="Side Panel Docked"/>
+
 *Docked side panel mode — stay on your workflow while filing a report*
 
 ### Settings — Overview
-![Settings Overview](screenshots/03-settings-overview.png)
+<img src="screenshots/03-settings-overview.png" width="400" alt="Settings Overview"/>
+
 *Collapsible settings sections — Master List, Priority, Transaction, LOB, Error Logs*
 
 ### Settings — Priority Configuration
-![Priority Config](screenshots/04-settings-priority-config.png)
+<img src="screenshots/04-settings-priority-config.png" width="400" alt="Priority Configuration"/>
+
 *Add, remove, and manage priority levels*
 
 ### Settings — Transaction Type Configuration
-![Transaction Config](screenshots/05-settings-transaction-config.png)
+<img src="screenshots/05-settings-transaction-config.png" width="400" alt="Transaction Type Configuration"/>
+
 *Fully configurable transaction type list — add your own types*
 
 ### Settings — Line of Business Configuration
-![LOB Config](screenshots/12-settings-lob-config-v36.png)
+<img src="screenshots/12-settings-lob-config-v36.png" width="400" alt="LOB Configuration"/>
+
 *Manage LOBs, help desk emails, and per-LOB email templates*
 
 ### Settings — Error Logs & Debugging
-![Error Logs](screenshots/07-settings-error-logs.png)
+<img src="screenshots/07-settings-error-logs.png" width="400" alt="Error Logs"/>
+
 *Built-in error logging with export for faster support troubleshooting*
 
 ---
@@ -62,6 +73,7 @@ This release focuses on cleanup and making Send It ready for public distribution
 - ✅ Updated contact email to public address
 - ✅ Version bump to 3.6 across all files
 - ✅ Added `.gitignore` for public repo hygiene
+- ✅ Screenshots added to repo
 
 ---
 
@@ -174,7 +186,7 @@ New Business, Renewal, Rewrite, Endorsement, Cancellation, Reinstatement, Other
 
 | Version | Date | Notes |
 |---|---|---|
-| 3.6 | April 2026 | Public release cleanup, FLDC removed, email updated, screenshots added |
+| 3.6 | April 2026 | Public release cleanup, FLDC removed, screenshots added |
 | 3.5.2 | February 2026 | Transaction Type Configuration UI added |
 | 3.5 | — | Template system introduced (presets + custom) |
 | 3.4 | — | Transaction types added |
