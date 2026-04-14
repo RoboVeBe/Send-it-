@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Property & Casualty",
+    "email": "pc-help@company.com"
+  },
+  {
+    "name": "Life Insurance",
+    "email": "life-help@company.com"
+  },
+  {
+    "name": "Health Insurance",
+    "email": "health-help@company.com"
+  },
+  {
+    "name": "Commercial Lines",
+    "email": "commercial-help@company.com"
+  },
+  {
+    "name": "Claims",
+    "email": "claims-help@company.com"
+  },
+  {
+    "name": "Other/General",
+    "email": "it-help@company.com"
+  }
+]

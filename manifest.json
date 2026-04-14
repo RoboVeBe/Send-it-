@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Send It - Smart Issue Routing",
+  "version": "3.6",
+  "description": "Streamlines issue reporting with smart routing to help desks",
+  "permissions": ["storage", "sidePanel"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Send It",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

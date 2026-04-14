@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send It</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="extension-window">
+        <div class="extension-header">
+            <div class="header-left">
+                <div class="icon">
+                    <img src="icon48.png" alt="Send It Logo" class="send-it-logo">
+                </div>
+                <div class="header-title">
+                    <div class="brand-name">Send It</div>
+                    <div class="brand-tagline">Smart Issue Routing</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-btn" id="viewBtn" title="Dock/Undock Window">◫</button>
+                <button class="header-btn" id="darkModeBtn" title="Toggle Dark Mode">🌙</button>
+                <button class="header-btn" id="setupBtn" title="Settings">⚙️</button>
+            </div>
+        </div>
+        <div class="extension-body">
+            
+            <div class="section-title">📋 Report Information</div>
+            
+            <!-- Line of Business (FIRST) -->
+            <div class="form-group">
+                <label for="lob">Line of Business <span class="required">*</span></label>
+                <select id="lob" 
+                        style="width: 100%;"
+                        aria-label="Line of Business"
+                        aria-required="true"
+                        aria-describedby="lob-help">
+                    <option value="">-- Select --</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <span id="lob-help" class="help-text" style="display: block; margin-top: 4px;">Choose the department for this issue</span>
+                
+                <div style="margin-top: 8px; display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="default-btn" id="setDefaultBtn" style="padding: 6px 12px; font-size: 11px; width: auto;">
+                        Set LOB as Default
+                    </button>
+                    <div class="default-status" id="defaultStatus" style="display: none; font-size: 11px; color: #f39c12; font-weight: 600;"></div>
+                </div>
+            </div>
+
+            <!-- Priority and Transaction Row (UNDER LOB) -->
+            <div style="display: flex; gap: 15px; margin-bottom: 16px; align-items: flex-start;">
+                <div style="flex: 1;">
+                    <label for="priority">Priority <span class="required">*</span></label>
+                    <select id="priority" 
+                            style="width: 100%;"
+                            aria-label="Priority Level"
+                            aria-required="true">
+                    </select>
+                </div>
+
+                <div style="flex: 1;">
+                    <label for="transaction">Transaction <span class="required">*</span></label>
+                    <select id="transaction" 
+                            style="width: 100%;"
+                            aria-label="Transaction Type"
+                            aria-required="true"
+                            aria-describedby="transaction-help">
+                        <option value="">-- Select --</option>
+                    </select>
+                    <span id="transaction-help" class="help-text" style="display: block; margin-top: 4px;">What transaction were you processing?</span>
+                </div>
+            </div>
+
+            <div class="form-group" id="customEmailGroup" style="display: none;">
+                <label for="customEmail">Custom Help Desk Email <span class="required">*</span></label>
+                <input type="email" 
+                       id="customEmail" 
+                       placeholder="e.g., specific-team@company.com"
+                       aria-label="Custom Help Desk Email"
+                       aria-required="true">
+            </div>
+            
+            <div class="form-group">
+                <label for="policy">Policy or Control Number <span class="required">*</span></label>
+                <input type="text" 
+                       id="policy" 
+                       placeholder="e.g., POL-2024-123456"
+                       aria-label="Policy or Control Number"
+                       aria-required="true">
+            </div>
+
+            <div class="form-group">
+                <label for="insured">Named Insured <span class="required">*</span></label>
+                <input type="text" 
+                       id="insured" 
+                       placeholder="Enter insured name"
+                       aria-label="Named Insured"
+                       aria-required="true">
+            </div>
+
+            <div class="field-row">
+                <div class="form-group">
+                    <label for="effective">Effective Date <span class="required">*</span></label>
+                    <input type="date" 
+                           id="effective"
+                           aria-label="Effective Date"
+                           aria-required="true">
+                </div>
+
+                <div class="form-group">
+                    <label for="premium">Premium <span class="required">*</span></label>
+                    <input type="text" 
+                           id="premium" 
+                           placeholder="$0.00"
+                           aria-label="Premium Amount"
+                           aria-required="true"
+                           aria-describedby="premium-help">
+                    <span id="premium-help" class="help-text">Auto-formats to currency</span>
+                </div>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <div class="section-title">🔍 Issue Details</div>
+            
+            <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+                <label for="issue" style="margin-bottom: 8px;">Issue Description <span class="required">*</span></label>
+                
+                <div class="rich-editor-container" id="editorContainer">
+                    <div class="toolbar" role="toolbar" aria-label="Text formatting">
+                        <button type="button" class="tool-btn" data-cmd="bold" title="Bold" aria-label="Bold text"><b>B</b></button>
+                        <button type="button" class="tool-btn" data-cmd="italic" title="Italic" aria-label="Italic text"><i>I</i></button>
+                        <button type="button" class="tool-btn" data-cmd="underline" title="Underline" aria-label="Underline text"><u>U</u></button>
+                        <button type="button" class="tool-btn" data-cmd="insertUnorderedList" title="Bullet List" aria-label="Insert bullet list">• List</button>
+                        <button type="button" class="tool-btn" id="fullscreenBtn" title="Fullscreen" aria-label="Toggle fullscreen mode">⛶</button>
+                    </div>
+
+                    <div class="toolbar secondary-toolbar" id="fsToolbar">
+                        <select id="fontSizeBtn" class="tool-select" title="Font Size">
+                            <option value="2">Small</option>
+                            <option value="3" selected>Normal</option>
+                            <option value="5">Large</option>
+                            <option value="7">Huge</option>
+                        </select>
+                        <div class="tool-separator"></div>
+                        <div class="color-picker-wrapper" title="Text Color">
+                            <span style="font-size: 14px;">🎨</span>
+                            <input type="color" id="textColorBtn" value="#333333">
+                        </div>
+                        <div class="tool-separator"></div>
+                        <button type="button" class="tool-btn" data-cmd="undo" title="Undo">↶</button>
+                        <button type="button" class="tool-btn" data-cmd="redo" title="Redo">↷</button>
+                        <div class="tool-separator" style="margin-left: auto;"></div>
+                        <button type="button" class="tool-btn btn-fs-copy" id="fsCopyBtn" title="Copy Content">
+                            📋 Copy Text
+                        </button>
+                    </div>
+
+                    <div id="issue" 
+                         class="editor" 
+                         contenteditable="true" 
+                         spellcheck="true" 
+                         placeholder="Describe the issue you're experiencing in detail..."
+                         role="textbox"
+                         aria-multiline="true"
+                         aria-label="Issue Description"
+                         aria-required="true"></div>
+                </div>
+            </div>
+            
+            <div class="screenshot-reminder" role="note" aria-label="Screenshot reminder">
+                ⚠️ When submitting via Outlook, attach screenshots and include any error messages in the Issue Description section ⚠️
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" id="clearBtn" aria-keyshortcuts="Control+K">
+                    Clear <span class="shortcut-hint">Ctrl+K</span>
+                </button>
+                <button class="btn-primary" id="generateBtn" aria-keyshortcuts="Control+Enter">
+                    Generate Report <span class="shortcut-hint">Ctrl+Enter</span>
+                </button>
+            </div>
+
+            <div id="reportPreview" class="report-preview" style="display: none;"></div>
+
+            <div class="output-options" id="outputOptions" style="display: none;">
+                <button class="btn-output" id="copyBtn">
+                    <span class="btn-icon">📋</span>
+                    <span>Copy</span>
+                </button>
+                <button class="btn-output" id="downloadBtn">
+                    <span class="btn-icon">💾</span>
+                    <span>Download</span>
+                </button>
+                <button class="btn-output" id="outlookBtn">
+                    <span class="btn-icon">📧</span>
+                    <span>Outlook</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="width: 320px; text-align: center;">
+            <div class="modal-header">
+                <span>⚠️ Settings Access</span>
+                <button class="close-btn" id="closeConfirmBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 20px;">Are you sure you want to enter setup?</p>
+                <div class="button-group">
+                    <button class="btn-secondary" id="cancelConfirmBtn">Cancel</button>
+                    <button class="btn-primary" id="yesConfirmBtn">Yes, Enter Setup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="setupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>⚙️ Settings & Setup</span>
+                <button class="close-btn" id="closeSetupBtn">×</button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="section-header collapsed" id="headerSettingsMaster">
+                    <div class="section-title">📂 Master List & Feedback</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="section-content collapsed" id="contentSettingsMaster">
+                    <div class="view-settings">
+                        <div class="section-title">File Management</div>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="file" id="importFile" accept=".json" style="display: none;">
+                            <button id="importBtn" class="btn-secondary" style="font-size: 12px; padding: 8px; flex: 1;">📥 Import Settings</button>
+                            <button id="exportBtn" class="btn-secondary" style="font-size: 12px; padding: 8px; flex: 1;">📤 Export Settings</button>
+                        </div>
+                        <button id="restoreDefaultsBtn" class="btn-secondary" style="font-size: 12px; padding: 8px; width: 100%; background: linear-gradient(135deg, #dc3545, #c82333); color: white; border: none;">
+                            🔄 Restore Defaults
+                        </button>
+                        <div class="view-settings-text" style="font-size: 11px; margin-top: 8px; color: #999;">
+                            💡 Export saves all settings. Import loads department config.
+                        </div>
+                    </div>
+                    
+                    <div class="view-settings">
+                        <button id="feedbackBtn" class="btn-primary" style="width: 100%; font-size: 13px; padding: 10px;">
+                            💬 Send Ideas or Questions
+                        </button>
+                        <div class="view-settings-text">
+                            Have suggestions? Click above to email us.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header collapsed" id="headerSettingsPriority">
+                    <div class="section-title">🚩 Priority Configuration</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="section-content collapsed" id="contentSettingsPriority">
+                    <div class="lob-list" id="priorityList" style="margin-bottom: 20px;"></div>
+                    <div class="add-lob-form" style="margin-bottom: 30px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="newPriorityName" placeholder="New Priority Level">
+                            <button class="btn-primary" id="addPriorityBtn" style="width: auto; white-space: nowrap;">Add Priority</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header collapsed" id="headerSettingsTransaction">
+                    <div class="section-title">🔄 Transaction Type Configuration</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="section-content collapsed" id="contentSettingsTransaction">
+                    <div class="lob-list" id="transactionList" style="margin-bottom: 20px;"></div>
+                    <div class="add-lob-form" style="margin-bottom: 30px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="newTransactionName" placeholder="New Transaction Type (e.g., Transfer, Audit)">
+                            <button class="btn-primary" id="addTransactionBtn" style="width: auto; white-space: nowrap;">Add Transaction</button>
+                        </div>
+                        <div class="view-settings-text" style="margin-top: 10px; font-size: 11px; color: #999;">
+                            💡 Common types: New Business, Renewal, Endorsement, Cancellation, Reinstatement
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header collapsed" id="headerSettingsLOB">
+                    <div class="section-title">📋 Line of Business Configuration</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="section-content collapsed" id="contentSettingsLOB">
+                    <div class="lob-list" id="lobList"></div>
+                    <div class="add-lob-form">
+                        <div class="form-group">
+                            <label for="newLobName">Line of Business Name</label>
+                            <input type="text" id="newLobName" placeholder="e.g., Specialty Insurance">
+                        </div>
+                        <div class="form-group">
+                            <label for="newLobEmail">Help Desk Email</label>
+                            <input type="email" id="newLobEmail" placeholder="e.g., specialty-help@company.com">
+                        </div>
+                        <button class="btn-primary" id="addLobBtn" style="width: 100%;">Add Line of Business</button>
+                    </div>
+                </div>
+
+                <div class="section-header collapsed" id="headerSettingsErrors">
+                    <div class="section-title">🐛 Error Logs & Debugging</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="section-content collapsed" id="contentSettingsErrors">
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border: 1px solid #ffc107;">
+                        <p style="margin: 0 0 10px 0; font-size: 13px; color: #856404;">
+                            If you're experiencing issues, export the error log and email it to support for faster troubleshooting.
+                        </p>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <button id="exportErrorsBtn" class="btn-secondary" style="flex: 1; font-size: 12px; padding: 8px;">
+                                📥 Export Errors
+                            </button>
+                            <button id="viewErrorsBtn" class="btn-secondary" style="flex: 1; font-size: 12px; padding: 8px;">
+                                👁️ View in Console
+                            </button>
+                            <button id="clearErrorsBtn" class="btn-secondary" style="flex: 1; font-size: 12px; padding: 8px;">
+                                🗑️ Clear Logs
+                            </button>
+                        </div>
+                        <div id="errorCount" style="font-size: 12px; color: #856404; text-align: center; font-weight: 600;">
+                            Loading error count...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Editor Modal (v3.5) -->
+    <div id="templateEditorModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 750px;">
+            <div class="modal-header">
+                <span id="templateEditorTitle">✏️ Edit Email Template</span>
+                <button class="close-btn" id="closeTemplateEditorBtn">×</button>
+            </div>
+            <div class="modal-body">
+                
+                <!-- Template Mode Selection -->
+                <div class="form-group">
+                    <label style="font-weight: 600; margin-bottom: 10px; display: block;">Template Mode:</label>
+                    <div style="display: flex; gap: 20px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="templateMode" value="preset" id="templateModePreset" checked>
+                            <span>Use Preset Template</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="templateMode" value="custom" id="templateModeCustom">
+                            <span>Create Custom Template</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="section-divider" style="margin: 15px 0;"></div>
+                
+                <!-- Preset Selection (shown when preset mode) -->
+                <div id="presetSelection" class="form-group">
+                    <label for="templatePresetSelect">Select Preset:</label>
+                    <select id="templatePresetSelect" style="width: 100%; padding: 8px;">
+                        <option value="detailed" selected>Detailed (No Premium/Date) - Most common fields</option>
+                        <option value="full">Full (All Fields) - Detailed report format</option>
+                        <option value="minimal">Minimal (Policy Focus) - Compact, policy-first</option>
+                        <option value="compact">Compact (Bracketed) - IT-friendly format</option>
+                        <option value="itStandard">IT Standard - Department-first format</option>
+                    </select>
+                </div>
+                
+                <!-- Custom Template Editor (shown when custom mode) -->
+                <div id="customTemplateEditor" style="display: none;">
+                    <div class="form-group">
+                        <label for="customSubjectTemplate">Subject Line Template:</label>
+                        <textarea id="customSubjectTemplate" rows="2" style="width: 100%; font-family: 'Courier New', monospace; padding: 8px; resize: vertical;"></textarea>
+                        <div style="font-size: 11px; color: #666; margin-top: 5px; display: flex; justify-content: space-between;">
+                            <span>Length: <span id="subjectLength">0</span> characters</span>
+                            <span id="subjectLengthWarning" style="color: #e74c3c; display: none;">⚠️ May truncate in email clients</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Available Tokens (click to insert):</label>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;">
+                            <button type="button" class="token-btn" data-token="{priority}" data-target="subject">{priority}</button>
+                            <button type="button" class="token-btn" data-token="{transaction}" data-target="subject">{transaction}</button>
+                            <button type="button" class="token-btn" data-token="{lob}" data-target="subject">{lob}</button>
+                            <button type="button" class="token-btn" data-token="{pol.#}" data-target="subject">{pol.#}</button>
+                            <button type="button" class="token-btn" data-token="{insured}" data-target="subject">{insured}</button>
+                            <button type="button" class="token-btn" data-token="{date}" data-target="subject">{date}</button>
+                            <button type="button" class="token-btn" data-token="{premium}" data-target="subject">{premium}</button>
+                            <button type="button" class="token-btn" data-token="{timestamp}" data-target="subject">{timestamp}</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customBodyTemplate">Body Template:</label>
+                        <textarea id="customBodyTemplate" rows="10" style="width: 100%; font-family: 'Courier New', monospace; padding: 8px; resize: vertical;"></textarea>
+                        <div style="font-size: 11px; color: #666; margin-top: 5px;">
+                            ℹ️ Note: <code>{issue}</code> token is <strong>required</strong> in body template
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Available Tokens for Body:</label>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button type="button" class="token-btn" data-token="{priority}" data-target="body">{priority}</button>
+                            <button type="button" class="token-btn" data-token="{transaction}" data-target="body">{transaction}</button>
+                            <button type="button" class="token-btn" data-token="{lob}" data-target="body">{lob}</button>
+                            <button type="button" class="token-btn" data-token="{pol.#}" data-target="body">{pol.#}</button>
+                            <button type="button" class="token-btn" data-token="{insured}" data-target="body">{insured}</button>
+                            <button type="button" class="token-btn" data-token="{date}" data-target="body">{date}</button>
+                            <button type="button" class="token-btn" data-token="{premium}" data-target="body">{premium}</button>
+                            <button type="button" class="token-btn" data-token="{issue}" data-target="body" style="background: #e74c3c;">{issue}</button>
+                            <button type="button" class="token-btn" data-token="{timestamp}" data-target="body">{timestamp}</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-divider" style="margin: 15px 0;"></div>
+                
+                <!-- Live Preview -->
+                <div class="form-group">
+                    <label style="font-weight: 600;">Live Preview:</label>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="font-size: 13px;">Subject:</strong>
+                        <div id="subjectPreview" class="template-preview">
+                            Loading preview...
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <strong style="font-size: 13px;">Body:</strong>
+                        <div id="bodyPreview" class="template-preview" style="max-height: 350px; overflow-y: auto; min-height: 100px;">
+                            Loading preview...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Validation Errors -->
+                <div id="templateErrors" style="display: none; background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 12px; margin-top: 15px;">
+                    <strong style="color: #856404;">⚠️ Validation Errors:</strong>
+                    <ul id="templateErrorsList" style="margin: 8px 0 0 20px; padding: 0; color: #856404;"></ul>
+                </div>
+                
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: space-between; padding: 15px 20px; border-top: 1px solid #ddd;">
+                <button class="btn-secondary" id="resetTemplateBtn">Reset to Default</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-secondary" id="cancelTemplateBtn">Cancel</button>
+                    <button class="btn-primary" id="saveTemplateBtn">Save Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
